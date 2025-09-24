@@ -4,15 +4,14 @@ import React, { useState, useEffect } from 'react';
 const Cards = ({ searchTerm }) => {
     const [cardsData, setCardsData] = useState([]);
     const [loading, setLoading] = useState(true);
-    // 1. New state to track which card's text was copied
     const [copiedId, setCopiedId] = useState(null);
 
-    // 2. New function to handle the copy action
+    // This function handles the copy-to-clipboard action.
     const handleCopy = (id, description) => {
+        // Use the modern navigator.clipboard API for copying
         navigator.clipboard.writeText(description).then(() => {
-            // Set this card's ID as the one that was copied
-            setCopiedId(id);
-            // Reset the "Copied!" text back to "Copy" after 2 seconds
+            setCopiedId(id); // Set the ID of the copied card
+            // Reset the text back to "Copy" after 2 seconds
             setTimeout(() => {
                 setCopiedId(null);
             }, 2000);
@@ -21,12 +20,20 @@ const Cards = ({ searchTerm }) => {
         });
     };
 
+    // This effect runs whenever the 'searchTerm' prop changes.
     useEffect(() => {
         const fetchCards = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`/api/images?q=${searchTerm}`);
-                if (!response.ok) throw new Error('Network response was not ok');
+                // **THIS IS THE KEY FIX FOR DEPLOYMENT**
+                // In production (Vercel), it uses the REACT_APP_API_URL.
+                // In development, this is empty, so the proxy is used.
+                const baseUrl = process.env.REACT_APP_API_URL || '';
+                const response = await fetch(`${baseUrl}/api/images?q=${searchTerm}`);
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
                 const data = await response.json();
                 setCardsData(data);
             } catch (error) {
@@ -34,13 +41,16 @@ const Cards = ({ searchTerm }) => {
             }
             setLoading(false);
         };
+
         fetchCards();
     }, [searchTerm]);
 
+    // Filter out any cards that are missing image data to prevent crashes
     const validCards = cardsData.filter(card => card.beforeImage && card.afterImage);
 
+    // Display a loading message while fetching data
     if (loading) {
-        return <p>Loading images...</p>;
+        return <p style={{ textAlign: 'center', marginTop: '20px' }}>Loading images...</p>;
     }
 
     return (
@@ -56,9 +66,8 @@ const Cards = ({ searchTerm }) => {
                             <div className="title">
                                 <h3>{card.title}</h3>
                                 <div className="btns">
-                                    {/* 3. Updated this element to be a clickable button */}
-                                    <button 
-                                        className="copy-btn" 
+                                    <button
+                                        className="copy-btn"
                                         onClick={() => handleCopy(card._id, card.description)}
                                     >
                                         {copiedId === card._id ? 'Copied!' : 'Copy'}
@@ -72,9 +81,9 @@ const Cards = ({ searchTerm }) => {
                         </div>
                     ))
                 ) : (
-                    searchTerm
-                        ? <p>No results found for "{searchTerm}"</p>
-                        : <p>No images found.</p>
+                    <p style={{ textAlign: 'center', marginTop: '20px' }}>
+                        {searchTerm ? `No results found for "${searchTerm}"` : "No images found."}
+                    </p>
                 )}
             </div>
         </div>
@@ -82,3 +91,4 @@ const Cards = ({ searchTerm }) => {
 }
 
 export default Cards;
+
