@@ -1,0 +1,83 @@
+
+
+footer{
+  background-color: #1b241f;
+  padding: 10px;
+}
+.f-logo{
+  display: flex;
+  align-items: center;
+}
+.f-logo h3{
+  border-left: 1px solid #757575;
+  border-bottom: 1px solid #757575;
+  border-top: 1px solid #757575;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  color: rgb(157, 157, 157);
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.f-logo img{
+  border-right: 1px solid #757575;
+  border-bottom: 1px solid #757575;
+  border-top: 1px solid #757575;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+
+  width: 25px;
+  margin-left: -3px;
+  padding: 5px 0px;
+}
+.about{
+  border: 1px solid #535353;
+  border-radius: 25px;
+  padding: 10px;
+  margin: 5px;
+}
+.about h4 {
+  color: #e3e3e3;
+}
+p{
+  color: rgb(187, 187, 187);
+}
+.contact{
+  border-radius: 15px;
+  border: 1px solid #4f4f4f;
+  padding: 10px;
+  margin: 5px;
+}
+.c-icons{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 28px;
+  gap: 2rem;
+}
+.c-icons a i{
+  font-size: 25px;
+  color: #d0d0d0;
+}
+.copyright{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.c-heading h4{
+  color: #c6c6c6;
+}
+.copyright h6{
+  color: rgb(116, 116, 116);
+}
+
+@media (min-width: 420px){
+  .footer-c{
+    display: flex;
+  }
+  .about{
+    width: 70%;
+  }
+  .contact{
+    width: 30%;
+  }
+}

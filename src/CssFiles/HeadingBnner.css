@@ -1,0 +1,39 @@
+.banner {
+    margin-top: 70px;
+    /* border: 1px solid black; */
+    border-radius: 20px;
+    backdrop-filter: blur(150px) saturate(120%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 20px;
+}
+.banner h1 {
+    font-size: 80px;
+    color: #09262f;
+}
+
+.banner img {
+    width: 80px;
+    border-radius: 80%;
+    opacity: 50%;
+}
+.intro{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #dad8cf;
+    /* border-radius: 20px; */
+    margin-top: 10px;
+}
+.intro h3{
+    color: #09262f;
+    font-size: 25px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.intro h5{
+    color: #04232c;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

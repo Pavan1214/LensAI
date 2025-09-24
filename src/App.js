@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import './CssFiles/App.css';
+import React, { useState } from 'react';
+import Cards from './components/Cards';
+import Navbar from './components/Navbar';
+import { useDebounce } from './hooks/useDebounce';
+import Footer from './components/Footer';
+import HeadingBanner from './components/HeadingBanner';
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 500); // 500ms delay
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar 
+        searchTerm={searchTerm} 
+        onSearchChange={(e) => setSearchTerm(e.target.value)} 
+      />
+        <HeadingBanner />
+      <Cards searchTerm={debouncedSearchTerm} />
+      <Footer />
     </div>
   );
 }
